@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        width: 100%;
+        border: 1px solid #000;
+      }
+      th,
+      td {
+        width: 25%;
+        text-align: center;
+        vertical-align: top;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        padding: 0.3em;
+        caption-side: bottom;
+      }
+      caption {
+        padding: 0.3em;
+        color: #fff;
+        background: #000;
+      }
+      th {
+        background: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>EMAIL</th>
+            <th>PASSWORD</th>
+          </tr>
+        </thead>
+        <tbody id="datos"></tbody>
+      </table>
+      <h1 id="alert">SIN DATOS</h1>
+    </div>
+    <script>
+      const datosNuevos = document.getElementById("datos");
+      const alert = document.getElementById("alert");
+      const template = document.createElement("template");
+      const url = "http://localhost:3000/api/v1/users";
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((users) => {
+            template.innerHTML = /*HTML*/ `
+                <tr>
+                  <td>${users.id}</td>
+                  <td>${users.email}</td>
+                  <td>${users.password}</td>
+                </tr>`;
+            datosNuevos.appendChild(template.content.cloneNode(true));
+          });
+          alert.style.display = "none";
+        });
+    </script>
+  </body>
+</html>
