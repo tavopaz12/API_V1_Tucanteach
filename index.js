@@ -23,7 +23,7 @@ const options = {
 app.use(cors(options));
 
 app.get('/', (req, res) => {
-  res.send('Hola mi server en express');
+  res.send('<h1>API TUCANTEACH</h1>');
 });
 
 app.get('/nueva-ruta', (req, res) => {
