@@ -1,11 +1,9 @@
 const boom = require('@hapi/boom');
 
-const { models }= require('./../libs/sequelize');
+const { models } = require('./../libs/sequelize');
 
 class TaskService {
-
-  constructor(){
-  }
+  constructor() {}
   async create(data) {
     const newTask = await models.Task.create(data);
     return newTask;
@@ -14,6 +12,11 @@ class TaskService {
   async find() {
     const tasks = await models.Task.findAll();
     return tasks;
+  }
+
+  async findByUser(userId) {
+    const tasks = await models.Task.findAll();
+    return [];
   }
 
   async findOne(id) {
@@ -32,7 +35,6 @@ class TaskService {
     await task.destroy();
     return { id };
   }
-
 }
 
 module.exports = TaskService;

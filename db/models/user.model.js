@@ -9,6 +9,11 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  role: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'student'
+  },
   name: {
     allowNull: false,
     type: DataTypes.STRING
@@ -34,6 +39,11 @@ const UserSchema = {
   },
   password: {
     allowNull: false,
+    type: DataTypes.STRING
+  },
+  recoveryToken: {
+    field: 'recovery_token',
+    allowNull: true,
     type: DataTypes.STRING
   },
   createdAt: {

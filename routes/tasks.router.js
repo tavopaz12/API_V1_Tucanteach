@@ -1,8 +1,15 @@
 const express = require('express');
+const passport = require('passport');
 
 const TaskService = require('../services/task.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createTaskSchema, updateTaskSchema, getTaskSchema } = require('../schemas/task.schema');
+const { checkRoles } = require('../middlewares/auth.hanlder');
+
+const {
+  createTaskSchema,
+  updateTaskSchema,
+  getTaskSchema,
+} = require('../schemas/task.schema');
 
 const router = express.Router();
 const service = new TaskService();
@@ -16,7 +23,8 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id',
+router.get(
+  '/:id',
   validatorHandler(getTaskSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -29,7 +37,10 @@ router.get('/:id',
   }
 );
 
-router.post('/',
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(createTaskSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -42,7 +53,8 @@ router.post('/',
   }
 );
 
-router.patch('/:id',
+router.patch(
+  '/:id',
   validatorHandler(getTaskSchema, 'params'),
   validatorHandler(updateTaskSchema, 'body'),
   async (req, res, next) => {
@@ -57,13 +69,14 @@ router.patch('/:id',
   }
 );
 
-router.delete('/:id',
+router.delete(
+  '/:id',
   validatorHandler(getTaskSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       await service.delete(id);
-      res.status(201).json({id});
+      res.status(201).json({ id });
     } catch (error) {
       next(error);
     }
