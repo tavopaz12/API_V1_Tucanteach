@@ -24,7 +24,6 @@ class UserService {
     const users = await models.User.findOne({
       where: { email },
     });
-
     return users;
   }
 
@@ -35,8 +34,7 @@ class UserService {
 
   async update(id, changes) {
     const user = await this.findOne(id);
-    const password = await bcrypt.hash(changes.password, 10);
-    const rta = await user.update({ ...changes, password });
+    const rta = await user.update(changes);
     return rta;
   }
 

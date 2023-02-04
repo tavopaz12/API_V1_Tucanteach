@@ -1,17 +1,21 @@
 const express = require('express');
+const passport = require('passport');
 
-const ProfileService = require('../services/profile.service');
+const TaskService = require('../services/task.service');
 
 const router = express.Router();
-const service = new ProfileService();
+const service = new TaskService();
 
 router.get(
-  '/:userName',
+  '/my-tasks',
+
+  passport.authenticate('jwt', { session: false }),
+
   async (req, res, next) => {
     try {
-      const { userName } = req.params;
-      const user = await service.findOne(userName);
-      res.json(user);
+      const user = req.user;
+      const tasks = await service.findByUser(user.sub);
+      res.json(tasks);
     } catch (error) {
       next(error);
     }
