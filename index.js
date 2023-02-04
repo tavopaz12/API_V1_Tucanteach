@@ -11,12 +11,14 @@ const {
 } = require('./middlewares/error.handler');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3005;
 
 app.use(express.json());
 
 const whitelist = [
   'http://localhost:8080',
+  'https://tucanteach.ml/',
+  'https://main--tucanteach.netlify.app/',
   'http://127.0.0.1:5500',
   'http://localhost:3000/',
   'http://127.0.0.1:5501',
@@ -27,8 +29,7 @@ const options = {
     if (whitelist.includes(origin) || !origin) {
       callback(null, true);
     } else {
-      callback(null, true);
-      // callback(new Error('NO PERMITIDO'));
+      callback(new Error('no permitido'));
     }
   },
 };

@@ -48,21 +48,27 @@ class AuthService {
 
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '5min' });
-    const link = `http://frontend.com/recovery?token=${token}`;
-    await service.update(user.id, { recoveryToken: token });
+    const link = `http://localhost:3000/recoveryrecovery?token=${token}`;
+    await service.update(user.id, { recoveryToken: token, password: user.password });
 
     const mail = {
-      from: config.userGmail,
+      from: `Soporte - TucanTeach <${config.userGmail}>`,
       to: `${user.email}`,
-      subject: 'Email para recuperar contraseña',
-      html: `<b>Ingresa a este link => ${link}</b>`,
+      subject: 'Recuperar contraseña!! 🤔',
+      html: `<b>Hola!!👌</b>
+      <p><b></b>Recibimos tu solicitud para recuperar tu contraseña!!</b></p>
+      <img src="https://png.pngtree.com/thumb_back/fh260/back_our/20190614/ourmid/pngtree-internet-password-network-security-technology-background-image_122932.jpg" width="700" height="200"/>
+      <p><b>Para proceder con el cambio ingresa a este link: <a href="${link}">${link}</a></b></p>
+      <b>Recuerda que el link caduca en 5 minutos, asi que vayamos a crear tu nueva contraseña👌</b>
+      <br>
+      `,
     };
 
     const rta = await this.sendMail(mail);
     return rta;
   }
 
-  async changePassword(token, newPassword) {
+  async changePassword(token, password) {
     try {
       const payload = jwt.verify(token, config.jwtSecret);
 
@@ -72,9 +78,7 @@ class AuthService {
         throw bomm.unauthorized();
       }
 
-      const hash = await bcrypt.hash(newPassword, 10);
-
-      await service.update(user.id, { recoveryToken: null, password: hash });
+      await service.update(user.id, { recoveryToken: null, password: password });
       return { message: 'Contraseña cambiada' };
     } catch (error) {
       throw bomm.unauthorized();

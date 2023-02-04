@@ -1,35 +1,82 @@
 const Joi = require('joi');
 
-const id = Joi.number().integer();
+const id = Joi.string();
+
 const name = Joi.string();
-const role = Joi.string();
 const lastName = Joi.string();
-const edad = Joi.number().integer();
-const escuela = Joi.string();
-const email = Joi.string().email();
-const password = Joi.string().min(8);
+const userName = Joi.string();
+
+const nivelSchool = Joi.string();
+const nameSchool = Joi.string();
+const gradeSchool = Joi.string();
+const ubicacionSchool = Joi.string();
+
+const cellPhone = Joi.string();
+const email = Joi.string()
+  .email({
+    minDomainSegments: 2,
+    tlds: { allow: ['com', 'net', 'mx'] },
+  })
+  .messages({ 'string.email': 'Ingresa un email valido' });
+const password = Joi.string().min(8).messages({
+  'string.min': `La contraseña debe de tener {#limit} caracteres como minimo`,
+});
 
 const createUserSchema = Joi.object({
-  name: name.required(),
-  role: role.required(),
-  lastName: lastName.required(),
-  edad: edad.required(),
-  escuela: escuela.required(),
-  email: email.required(),
-  password: password.required(),
+  id: id.required().messages({ 'any.required': 'El id es requerido' }),
+
+  name: name.required().messages({ 'any.required': 'El nombre es requerido' }),
+  lastName: lastName
+    .required()
+    .messages({ 'any.required': 'El nombre es requerido' }),
+  userName: userName.required(),
+
+  nivelSchool: nivelSchool
+    .required()
+    .messages({ 'any.required': 'El tipo de educacion es requerido' }),
+  nameSchool: nameSchool
+    .required()
+    .messages({ 'any.required': 'El nombre de la escuela es requerido' }),
+  gradeSchool: gradeSchool
+    .required()
+    .messages({ 'any.required': 'El grado escolar es requerido' }),
+  ubicacionSchool: ubicacionSchool
+    .required()
+    .messages({ 'any.required': 'La ubicacion es requerida' }),
+
+  cellPhone: cellPhone
+    .required()
+    .messages({ 'any.required': 'El telefono es requerido' }),
+  email: email
+    .required()
+    .messages({ 'any.required': 'El correo es requerido' }),
+  password: password
+    .required()
+    .messages({ 'any.required': 'La contraseña es requerida' }),
 });
 
 const updateUserSchema = Joi.object({
+  id: id,
+
+  userName: userName,
   name: name,
   lastname: lastName,
-  edad: edad,
-  escuela: escuela,
+
+  nivelSchool: nivelSchool,
+  nameSchool: nameSchool,
+  gradeSchool: gradeSchool,
+  ubicacionSchool: ubicacionSchool,
+
+  cellPhone: cellPhone,
   email: email,
-  password: password,
 });
 
 const getUserSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserSchema, updateUserSchema, getUserSchema };
+module.exports = {
+  createUserSchema,
+  updateUserSchema,
+  getUserSchema,
+};
