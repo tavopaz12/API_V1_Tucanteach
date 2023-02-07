@@ -5,32 +5,54 @@ const USER_TABLE = 'users';
 const UserSchema = {
   id: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING,
   },
   role: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'student'
+    defaultValue: 'student',
   },
+
   name: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   lastName: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'last_name'
+    field: 'last_name',
   },
-  edad: {
-    allowNull: false,
-    type: DataTypes.INTEGER
-  },
-  escuela: {
+  userName: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'nombre_escuela'
+    field: 'user_name',
+  },
+
+  nivelSchool: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'nivel_school',
+  },
+  nameSchool: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'name_school',
+  },
+  gradeSchool: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'grade_school',
+  },
+  ubicacionSchool: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'ubicacion_school',
+  },
+
+  cellPhone: {
+    allowNull: false,
+    type: DataTypes.BIGINT,
   },
   email: {
     allowNull: false,
@@ -39,20 +61,28 @@ const UserSchema = {
   },
   password: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
+
+  avatar: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue:
+      'https://pixlok.com/wp-content/uploads/2022/02/Profile-Icon-SVG-09856789.png',
+  },
+
   recoveryToken: {
     field: 'recovery_token',
     allowNull: true,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
   },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'create_at',
-    defaultValue: Sequelize.NOW
-  }
-}
+    defaultValue: Sequelize.NOW,
+  },
+};
 
 class User extends Model {
   static config(sequelize) {
@@ -60,10 +90,9 @@ class User extends Model {
       sequelize,
       tableName: USER_TABLE,
       modelName: 'User',
-      timestamps: false
-    }
+      timestamps: false,
+    };
   }
 }
 
-
-module.exports = { USER_TABLE, UserSchema, User }
+module.exports = { USER_TABLE, UserSchema, User };

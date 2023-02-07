@@ -1,23 +1,25 @@
 const express = require('express');
 
-const UserService = require('../services/user.service');
+const SesionService = require('../services/sesion.service');
 const validatorHandler = require('../middlewares/validator.handler');
+const upload = require('./../libs/storage');
+
 const {
-  createUserSchema,
-  updateUserSchema,
-  getUserSchema,
-} = require('../schemas/user.schema');
+  createSesionSchema,
+  updateSesionSchema,
+  getSesionSchema,
+} = require('../schemas/sesion.schema');
 
 const router = express.Router();
-const service = new UserService();
+const service = new SesionService();
 
-const upload = require('./../libs/storageAvatar');
+const upload = require('./../libs/storage');
 const { config } = require('./../config/config');
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await service.find();
-    res.json(users);
+    const sesions = await service.find();
+    res.json(sesions);
   } catch (error) {
     next(error);
   }
@@ -25,12 +27,12 @@ router.get('/', async (req, res, next) => {
 
 router.get(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getSesionSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await service.findOne(id);
-      res.json(user);
+      const sesion = await service.findOne(id);
+      res.json(sesion);
     } catch (error) {
       next(error);
     }
@@ -42,8 +44,8 @@ router.post('/', upload.single('image'), async (req, res, next) => {
     const body = req.body;
     const image = getUrl(req);
 
-    const newUser = await service.create({ ...body, image });
-    res.status(201).json(newUser);
+    const newSesion = await service.create({ ...body, image });
+    res.status(201).json(newSesion);
   } catch (error) {
     next(error);
   }
@@ -51,16 +53,16 @@ router.post('/', upload.single('image'), async (req, res, next) => {
 
 router.patch(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
-  validatorHandler(updateUserSchema, 'body'),
-  upload.single('image'),
+  validatorHandler(getSesionSchema, 'params'),
+  validatorHandler(updateSesionSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
       const image = getUrl(req);
-      const user = await service.update(id, { ...body, image });
-      res.json(user);
+
+      const sesion = await service.update(id, { ...body, image });
+      res.json(sesion);
     } catch (error) {
       next(error);
     }
@@ -69,7 +71,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getSesionSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

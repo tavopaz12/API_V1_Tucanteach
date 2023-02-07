@@ -24,6 +24,7 @@ class UserService {
     const users = await models.User.findOne({
       where: { email },
     });
+
     return users;
   }
 

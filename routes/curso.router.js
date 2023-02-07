@@ -1,23 +1,25 @@
 const express = require('express');
 
-const UserService = require('../services/user.service');
+const CursoService = require('../services/curso.service');
 const validatorHandler = require('../middlewares/validator.handler');
+
+const upload = require('./../libs/storage');
+const { config } = require('./../config/config');
+
 const {
-  createUserSchema,
-  updateUserSchema,
-  getUserSchema,
-} = require('../schemas/user.schema');
+  createCursoSchema,
+  setImgUrl,
+  updateCursoSchema,
+  getCursoSchema,
+} = require('../schemas/curso.schema');
 
 const router = express.Router();
-const service = new UserService();
-
-const upload = require('./../libs/storageAvatar');
-const { config } = require('./../config/config');
+const service = new CursoService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await service.find();
-    res.json(users);
+    const cursos = await service.find();
+    res.json(cursos);
   } catch (error) {
     next(error);
   }
@@ -25,12 +27,12 @@ router.get('/', async (req, res, next) => {
 
 router.get(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getCursoSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await service.findOne(id);
-      res.json(user);
+      const curso = await service.findOne(id);
+      res.json(curso);
     } catch (error) {
       next(error);
     }
@@ -42,8 +44,8 @@ router.post('/', upload.single('image'), async (req, res, next) => {
     const body = req.body;
     const image = getUrl(req);
 
-    const newUser = await service.create({ ...body, image });
-    res.status(201).json(newUser);
+    const newCurso = await service.create({ ...body, image });
+    res.status(201).json(newCurso);
   } catch (error) {
     next(error);
   }
@@ -51,16 +53,17 @@ router.post('/', upload.single('image'), async (req, res, next) => {
 
 router.patch(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
-  validatorHandler(updateUserSchema, 'body'),
+  validatorHandler(getCursoSchema, 'params'),
+  validatorHandler(updateCursoSchema, 'body'),
   upload.single('image'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
       const image = getUrl(req);
-      const user = await service.update(id, { ...body, image });
-      res.json(user);
+      
+      const curso = await service.update(id, { ...body, image });
+      res.json(curso);
     } catch (error) {
       next(error);
     }
@@ -69,7 +72,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getCursoSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
