@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.number().integer();
+const id = Joi.string();
 const image = Joi.string();
 const title = Joi.string();
 const objective = Joi.string();

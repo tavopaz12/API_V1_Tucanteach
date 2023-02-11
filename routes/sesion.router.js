@@ -2,7 +2,6 @@ const express = require('express');
 
 const SesionService = require('../services/sesion.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const upload = require('./../libs/storage');
 
 const {
   createSesionSchema,

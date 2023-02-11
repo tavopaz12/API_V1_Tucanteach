@@ -11,7 +11,8 @@ const {
 const router = express.Router();
 const service = new UserService();
 
-const upload = require('./../libs/storageAvatar');
+const uploadAvatar = require('./../libs/storageAvatar');
+
 const { config } = require('./../config/config');
 
 router.get('/', async (req, res, next) => {
@@ -37,12 +38,12 @@ router.get(
   }
 );
 
-router.post('/', upload.single('image'), async (req, res, next) => {
+router.post('/', uploadAvatar.single('avatar'), async (req, res, next) => {
   try {
     const body = req.body;
-    const image = getUrl(req);
+    const avatar = getUrl(req);
 
-    const newUser = await service.create({ ...body, image });
+    const newUser = await service.create({ ...body, avatar });
     res.status(201).json(newUser);
   } catch (error) {
     next(error);
@@ -53,13 +54,13 @@ router.patch(
   '/:id',
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
-  upload.single('image'),
+  uploadAvatar.single('avatar'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const image = getUrl(req);
-      const user = await service.update(id, { ...body, image });
+      const avatar = getUrl(req);
+      const user = await service.update(id, { ...body, avatar });
       res.json(user);
     } catch (error) {
       next(error);
