@@ -1,3 +1,5 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "appService.defaultWebAppToDeploy": "/subscriptions/f18ee724-b9a9-421f-b830-7c77086ad57f/AppServices/subscriptions/f18ee724-b9a9-421f-b830-7c77086ad57f/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/apiTucanTeach",
+    "appService.deploySubpath": "."
 }
