@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
-	res.send('Hola, soy una nueva ruta');
+	res.send('Hola, soy una ruta nueva');
 });
 
 routerApi(app);
