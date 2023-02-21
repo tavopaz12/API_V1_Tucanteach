@@ -3,7 +3,7 @@
 
 [Unit]
 Description=Balanceo de carga para platzi
-Documentation=https://github.com/edisoncast/linux-platzi
+Documentation=https://github.com/tavopaz12/API_V1_Tucanteach.git
 After=network.target
 
 [Service]
@@ -11,7 +11,7 @@ Environment=PORT=%i
 Type=simple
 User=nodejs
 WorkingDirectory=/home/nodejs/server
-ExecStart=/usr/bin/node /home/nodejs/server/server.js
+ExecStart=/usr/bin/node /home/nodejs/server/index.js
 Restart-on=failure
 
 [Install]
