@@ -61,7 +61,7 @@ router.patch(
       const { id } = req.params;
       const body = req.body;
       const image = getUrl(req);
-      
+
       const curso = await service.update(id, { ...body, image });
       res.json(curso);
     } catch (error) {
@@ -89,7 +89,7 @@ const getUrl = (req) => {
     const img = req.file;
     const filename = img.filename;
 
-    return `${config.host}:${config.port}/public/${filename}`;
+    return `${config.hostProd}/public/${filename}`;
   }
 };
 

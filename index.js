@@ -4,10 +4,10 @@ const routerApi = require('./routes');
 const { checkApiKey } = require('./middlewares/auth.hanlder');
 
 const {
-	logErrors,
-	errorHandler,
-	boomErrorHandler,
-	ormErrorHandler,
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+  ormErrorHandler,
 } = require('./middlewares/error.handler');
 
 const app = express();
@@ -21,11 +21,11 @@ app.use(cors());
 require('./utils/auth/index');
 
 app.get('/', (req, res) => {
-	res.send('<h1>API TUCANTEACH</h1>');
+  res.send('<h1>API TUCANTEACH</h1>');
 });
 
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
-	res.send('Hola, soy una ruta nueva');
+  res.send('Hola, soy una nueva ruta');
 });
 
 routerApi(app);
@@ -36,5 +36,5 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {
-	console.log('Mi port' + port);
+  console.log('Mi port' + port);
 });
