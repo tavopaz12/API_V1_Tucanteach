@@ -15,7 +15,7 @@ if (config.isProd) {
   const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
   options.connectionString = URI;
 }
-
+ 
 const pool = new Pool(options);
 
 module.exports = pool;

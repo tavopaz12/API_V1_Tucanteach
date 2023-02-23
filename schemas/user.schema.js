@@ -6,6 +6,12 @@ const name = Joi.string();
 const lastName = Joi.string();
 const userName = Joi.string();
 
+const status = Joi.string();
+const about = Joi.string();
+const tokens = Joi.number();
+const interest = Joi.string();
+const materiasFavoritas = Joi.string();
+
 const nivelSchool = Joi.string();
 const nameSchool = Joi.string();
 const gradeSchool = Joi.string();
@@ -32,6 +38,11 @@ const createUserSchema = Joi.object({
     .required()
     .messages({ 'any.required': 'El apellido es requerido' }),
   userName: userName.required(),
+  status: status.required(),
+  about: about.required(),
+  tokens: tokens.required(),
+  interest: interest.required(),
+  materiasFavoritas: materiasFavoritas.required(),
   avatar,
 
   nivelSchool: nivelSchool
@@ -64,6 +75,12 @@ const updateUserSchema = Joi.object({
   userName,
   name,
   lastName,
+
+  status,
+  about,
+  tokens,
+  interest,
+  materiasFavoritas,
 
   nivelSchool,
   nameSchool,

@@ -12,4 +12,5 @@ async function getConnection() {
   return client;
 }
 
+
 module.exports = getConnection;

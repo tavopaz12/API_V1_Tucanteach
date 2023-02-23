@@ -30,6 +30,38 @@ const UserSchema = {
     unique: true,
   },
 
+  status: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'status',
+    defaultValue: 'online',
+  },
+  about: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'about',
+    defaultValue:
+      '¡Hola! Soy [tu nombre], [tu edad] años. En mi tiempo libre, me gusta [tus hobbies o actividades favoritas], lo que me ayuda a desconectar y relajarme. Me considero una persona [cualidades positivas que te describen], y creo que [tus valores personales].',
+  },
+  tokens: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    field: 'tokens',
+    defaultValue: 0,
+  },
+  interest: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'interest',
+    defaultValue: 'leer,escuchar música, jugar fútbol, jugar videojuegos',
+  },
+  materiasFavoritas: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'materias_favoritas',
+    defaultValue: 'español, matemáticas, geografía',
+  },
+
   nivelSchool: {
     allowNull: false,
     type: DataTypes.STRING,
