@@ -38,10 +38,10 @@ const createUserSchema = Joi.object({
     .required()
     .messages({ 'any.required': 'El apellido es requerido' }),
   userName: userName.required(),
-  status: status.required(),
-  about: about.required(),
-  tokens: tokens.required(),
-  interest: interest.required(),
+  status,
+  about,
+  tokens,
+  interest,
   materiasFavoritas: materiasFavoritas.required(),
   avatar,
 
