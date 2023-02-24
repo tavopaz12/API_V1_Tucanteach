@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 const { checkApiKey } = require('./middlewares/auth.hanlder');
+const path = require('path');
 
 const {
   logErrors,
@@ -21,7 +22,12 @@ app.use(cors());
 require('./utils/auth/index');
 
 app.get('/', (req, res) => {
-  res.send('<h1>API TUCANTEACH</h1>');
+  res.redirect('https://tucanteach.ml/')
+});
+
+app.get('/tavo', (req, res) => {
+  let rutaIndex = path.join(__dirname, './views/index.html');
+  res.sendFile(rutaIndex);
 });
 
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
