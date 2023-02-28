@@ -47,7 +47,7 @@ class AuthService {
 
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '5min' });
-    const link = `https://tavopaz12.ml/change-password?token=${token}`;
+    const link = `https://tucanteach.ml/change-password?token=${token}`;
     await service.update(user.id, {
       recoveryToken: token,
       password: user.password,
