@@ -1,6 +1,6 @@
 'use strict';
 
-const { SesionSchema, SESION_TABLE } = require('./../models/sesion.model');
+const { SesionSchema, SESION_TABLE } = require('../models/sesion.model');
 
 module.exports = {
   up: async (queryInterface) => {

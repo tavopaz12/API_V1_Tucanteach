@@ -1,6 +1,6 @@
 'use strict';
 
-const { TemaSchema, TEMA_TABLE } = require('./../models/tema.model');
+const { TemaSchema, TEMA_TABLE } = require('../models/tema.model');
 
 module.exports = {
   up: async (queryInterface) => {

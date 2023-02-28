@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { CURSO_TABLE } = require('./curso.model');
+
 const SESION_TABLE = 'sesiones';
 
 const SesionSchema = {
@@ -20,9 +22,32 @@ const SesionSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  cursoId: {
+    field: 'curso_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CURSO_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
 class Sesion extends Model {
+  static associate(models) {
+    this.belongsTo(models.Curso, { as: 'curso', onDelete: 'CASCADE' });
+  }
+
+  static associate(models) {
+    this.hasMany(models.Actividad, {
+      as: 'actividades',
+      foreignKey: 'sesionId',
+      onDelete: 'CASCADE',
+    });
+  }
+
   static config(sequelize) {
     return {
       sequelize,

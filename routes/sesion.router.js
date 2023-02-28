@@ -54,6 +54,7 @@ router.patch(
   '/:id',
   validatorHandler(getSesionSchema, 'params'),
   validatorHandler(updateSesionSchema, 'body'),
+  upload.single('image'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -87,7 +88,7 @@ const getUrl = (req) => {
     const img = req.file;
     const filename = img.filename;
 
-    return `${config.host}:${config.port}/public/${filename}`;
+    return `${config.hostProd}/public/${filename}`;
   }
 };
 

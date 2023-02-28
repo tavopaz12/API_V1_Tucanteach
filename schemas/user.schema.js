@@ -12,6 +12,9 @@ const tokens = Joi.number();
 const interest = Joi.string();
 const materiasFavoritas = Joi.string();
 
+const followers = Joi.string();
+const followings = Joi.string();
+
 const nivelSchool = Joi.string();
 const nameSchool = Joi.string();
 const gradeSchool = Joi.string();
@@ -45,6 +48,9 @@ const createUserSchema = Joi.object({
   interest,
   materiasFavoritas,
   avatar,
+
+  followers,
+  followings,
 
   nivelSchool: nivelSchool
     .required()
@@ -82,6 +88,9 @@ const updateUserSchema = Joi.object({
   tokens,
   interest,
   materiasFavoritas,
+
+  followers,
+  followings,
 
   nivelSchool,
   nameSchool,

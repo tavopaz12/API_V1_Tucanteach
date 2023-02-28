@@ -16,22 +16,42 @@ class TaskService {
 
   async findByUser(userId) {
     const tasks = await models.Task.findByPk(userId);
+
+    if (!tasks) {
+      throw boom.notFound('Tarea no encontrada');
+    }
+
     return tasks;
   }
 
   async findOne(id) {
     const task = await models.Task.findByPk(id);
+
+    if (!task) {
+      throw boom.notFound('Tarea no encontrada');
+    }
+
     return task;
   }
 
   async update(id, changes) {
     const task = await this.findOne(id);
+
+    if (!task) {
+      throw boom.notFound('Tarea no encontrada');
+    }
+
     const rta = await task.update(changes);
     return rta;
   }
 
   async delete(id) {
     const task = await this.findOne(id);
+
+    if (!task) {
+      throw boom.notFound('Tarea no encontrada');
+    }
+    
     await task.destroy();
     return { id };
   }

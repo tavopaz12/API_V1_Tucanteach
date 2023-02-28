@@ -8,6 +8,10 @@ const cursoRouter = require('./curso.router');
 const sesionRouter = require('./sesion.router');
 const actividadRouter = require('./actividad.router');
 const temaRouter = require('./tema.router');
+const post = require('./post.router');
+const conversations = require('./conversation.router');
+const messages = require('./message.router');
+const upload = require('./upload.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -20,6 +24,10 @@ function routerApi(app) {
   router.use('/sesiones', sesionRouter);
   router.use('/actividades', actividadRouter);
   router.use('/temas', temaRouter);
+  router.use('/posts', post);
+  router.use('/conversations', conversations);
+  router.use('/messages', messages);
+  router.use('/upload', upload);
 }
 
 module.exports = routerApi;

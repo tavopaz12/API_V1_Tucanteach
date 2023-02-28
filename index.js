@@ -17,6 +17,7 @@ const port = process.env.PORT || 3005;
 app.use(express.json());
 app.use('/public', express.static(`${__dirname}/storage/imgs`));
 app.use('/public', express.static(`${__dirname}/storage/avatar`));
+app.use('/public', express.static(`${__dirname}/storage/files`));
 app.use(cors());
 
 require('./utils/auth/index');

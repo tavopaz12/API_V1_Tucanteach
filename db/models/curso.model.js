@@ -24,6 +24,13 @@ const CursoSchema = {
 };
 
 class Curso extends Model {
+  static associate(models) {
+    this.hasMany(models.Sesion, {
+      as: 'sesiones',
+      foreignKey: 'cursoId',
+    });
+  }
+
   static config(sequelize) {
     return {
       sequelize,

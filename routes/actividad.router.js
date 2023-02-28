@@ -3,6 +3,7 @@ const express = require('express');
 const ActividadService = require('../services/actividad.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const upload = require('./../libs/storage');
+const { config } = require('./../config/config');
 
 const {
   createActividadSchema,
@@ -36,29 +37,30 @@ router.get(
   }
 );
 
-router.post(
-  '/',
-  validatorHandler(createActividadSchema),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newActividad = await service.create(body);
-      res.status(201).json(newActividad);
-    } catch (error) {
-      next(error);
-    }
+router.post('/', upload.single('image'), async (req, res, next) => {
+  try {
+    const body = req.body;
+    const image = getUrl(req);
+
+    const newActividad = await service.create({ ...body, image });
+    res.status(201).json(newActividad);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 router.patch(
   '/:id',
   validatorHandler(getActividadSchema, 'params'),
   validatorHandler(updateActividadSchema, 'body'),
+  upload.single('image'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const actividad = await service.update(id, body);
+      const image = getUrl(req);
+
+      const actividad = await service.update(id, { ...body, image });
       res.json(actividad);
     } catch (error) {
       next(error);
@@ -79,5 +81,14 @@ router.delete(
     }
   }
 );
+
+const getUrl = (req) => {
+  if (req.file) {
+    const img = req.file;
+    const filename = img.filename;
+
+    return `${config.hostProd}/public/${filename}`;
+  }
+};
 
 module.exports = router;

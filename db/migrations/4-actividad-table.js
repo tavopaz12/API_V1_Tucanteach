@@ -1,6 +1,6 @@
 'use strict';
 
-const { ActividadSchema, ACTIVIDAD_TABLE } = require('./../models/actividad.model');
+const { ActividadSchema, ACTIVIDAD_TABLE } = require('../models/actividad.model');
 
 module.exports = {
   up: async (queryInterface) => {

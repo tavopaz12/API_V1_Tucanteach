@@ -29,18 +29,52 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      include: ['posts', 'conversations'],
+    });
+
+    if (!user) {
+      throw boom.notFound('Usuario no encontrado');
+    }
+
     return user;
   }
 
   async update(id, changes) {
     const user = await this.findOne(id);
+
+    if (!user) {
+      throw boom.notFound('Usuario no encontrado');
+    }
+
     const rta = await user.update(changes);
     return rta;
   }
 
   async delete(id) {
     const user = await this.findOne(id);
+
+    if (!user) {
+      throw boom.notFound('Usuario no encontrado');
+    }
+
+    const posts = await user.getPosts();
+    const conversations = await user.getConversations();
+
+    for (let post of posts) {
+      await post.destroy();
+    }
+
+    for (let conversation of conversations) {
+      const messages = await conversation.getMessages();
+
+      for (let message of messages) {
+        await message.destroy();
+      }
+
+      await conversation.destroy();
+    }
+
     await user.destroy();
     return { id };
   }

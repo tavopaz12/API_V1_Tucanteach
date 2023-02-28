@@ -1,6 +1,6 @@
 'use strict';
 
-const { CursoSchema, CURSO_TABLE } = require('./../models/curso.model');
+const { CursoSchema, CURSO_TABLE } = require('../models/curso.model');
 
 module.exports = {
   up: async (queryInterface) => {

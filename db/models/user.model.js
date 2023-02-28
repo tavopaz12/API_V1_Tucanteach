@@ -48,14 +48,30 @@ const UserSchema = {
   },
   interest: {
     allowNull: false,
-    type: DataTypes.STRING,
-    defaultValue: 'leer,escuchar música, jugar fútbol, jugar videojuegos',
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: [
+      'Leer',
+      'Escuchar música',
+      'Jugar fútbol',
+      'Jugar videojuegos',
+    ],
   },
   materiasFavoritas: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'materias_favoritas',
-    defaultValue: 'español, matemáticas, geografía',
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: ['Español', 'Matemáticas', 'Geografía'],
+  },
+
+  followers: {
+    allowNull: false,
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: [],
+  },
+  followings: {
+    allowNull: false,
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: [],
   },
 
   nivelSchool: {
@@ -96,8 +112,7 @@ const UserSchema = {
   avatar: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue:
-      'https://pixlok.com/wp-content/uploads/2022/02/Profile-Icon-SVG-09856789.png',
+    defaultValue: 'https://tavopaz12.ml/public/avatar-default.png',
   },
 
   recoveryToken: {
@@ -114,6 +129,19 @@ const UserSchema = {
 };
 
 class User extends Model {
+  static associate(models) {
+    this.hasMany(models.Post, {
+      as: 'posts',
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    });
+    this.hasMany(models.Conversation, {
+      as: 'conversations',
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    });
+  }
+
   static config(sequelize) {
     return {
       sequelize,

@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { ACTIVIDAD_TABLE } = require('./actividad.model');
+
 const TEMA_TABLE = 'temas';
 
 const TemaSchema = {
@@ -20,9 +22,23 @@ const TemaSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  actividadId: {
+    field: 'actividad_id',
+    allowNull: false,
+    type: DataTypes.STRING,
+    references: {
+      model: ACTIVIDAD_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
 class Tema extends Model {
+  static associate(models) {
+    this.belongsTo(models.Actividad, { as: 'actividad', onDelete: 'CASCADE' });
+  }
   static config(sequelize) {
     return {
       sequelize,
