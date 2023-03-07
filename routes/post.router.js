@@ -169,7 +169,7 @@ router.delete(
 );
 
 const getUrl = (req, files) => {
-  const baseUrl = `${config.hostProd}`;
+  const baseUrl = `${config.hostProd}:`;
 
   console.log(files);
 

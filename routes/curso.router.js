@@ -12,7 +12,7 @@ const {
   updateCursoSchema,
   getCursoSchema,
 } = require('../schemas/curso.schema');
- 
+
 const router = express.Router();
 const service = new CursoService();
 
