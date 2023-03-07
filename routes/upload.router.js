@@ -4,6 +4,9 @@ const upload = require('./../libs/storage');
 const uploadFiles = require('./../libs/storagePdf');
 const { config } = require('./../config/config');
 
+const fs = require('fs');
+const path = require('path');
+
 const router = express.Router();
 
 router.post('/images', upload.array('images'), (req, res, next) => {
@@ -29,6 +32,41 @@ router.post('/files', uploadFiles.array('archivo'), (req, res) => {
     next(error);
   }
 });
+
+router.delete('/delete/image/:fileName', async (req, res, next) => {
+  try {
+    const fileName = req.params.fileName;
+    const filePath = path.join('storage', 'imgs', fileName);
+
+    const result = deleteFile(fileName, filePath);
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/delete/file/:fileName', async (req, res, next) => {
+  try {
+    const fileName = req.params.fileName;
+    const filePath = path.join('storage', 'files', fileName);
+
+    const result = deleteFile(fileName, filePath);
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+const deleteFile = (fileName, filePath) => {
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+    return `El archivo ${fileName} ha sido eliminado`;
+  } else {
+    return `El archivo ${fileName} no existe`;
+  }
+};
 
 const getUrl = (req, files) => {
   const baseUrl = `${config.hostProd}`;

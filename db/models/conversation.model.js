@@ -36,9 +36,7 @@ const ConversationSchema = {
 class Conversation extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user', onDelete: 'CASCADE' });
-  }
-
-  static associate(models) {
+  
     this.hasMany(models.Message, {
       as: 'messages',
       foreignKey: 'conversationId',

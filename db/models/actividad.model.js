@@ -38,9 +38,7 @@ const ActividadSchema = {
 class Actividad extends Model {
   static associate(models) {
     this.belongsTo(models.Sesion, { as: 'sesion', onDelete: 'CASCADE' });
-  }
 
-  static associate(models) {
     this.hasMany(models.Tema, {
       as: 'temas',
       foreignKey: 'actividadId',

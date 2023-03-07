@@ -10,9 +10,7 @@ class MessageService {
   }
 
   async find() {
-    const messages = await models.Message.findAll({
-      include: ['conversation'],
-    });
+    const messages = await models.Message.findAll();
 
     return messages;
   }
@@ -47,6 +45,19 @@ class MessageService {
 
     await message.destroy();
     return { id };
+  }
+
+  async deleteWithConversationId(id) {
+    const result = await models.Message.destroy({
+      where: { conversationId: id },
+    });
+
+    if (result === 0) {
+      // No se encontraron mensajes relacionados con la conversación
+      throw boom.notFound('Mensajes no encontrados');
+    } else {
+      return { id };
+    }
   }
 }
 

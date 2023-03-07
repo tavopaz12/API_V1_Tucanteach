@@ -23,6 +23,7 @@ router.get(
     try {
       const { id } = req.params;
       const conversation = await service.findConversation(id);
+
       res.json(conversation);
     } catch (error) {
       next(error);

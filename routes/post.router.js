@@ -8,8 +8,6 @@ const upload = require('./../libs/storage');
 const { config } = require('./../config/config');
 
 const {
-  createPostSchema,
-  updatePostSchema,
   getPostSchema,
 } = require('../schemas/post.schema');
 
@@ -60,6 +58,7 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
+
       const urls = req.files.map((file) => getUrl(req, file));
       const img = urls.join(', ');
 
