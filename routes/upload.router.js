@@ -9,6 +9,22 @@ const path = require('path');
 
 const router = express.Router();
 
+router.get('/files', (req, res) => {
+  try {
+    const directoryPath = path.join(__dirname, '..', 'storage', 'files');
+
+    fs.readdir(directoryPath, function (err, files) {
+      if (err) {
+        return console.log('Error al listar archivos: ' + err);
+      }
+
+      res.send(files);
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/images', upload.array('images'), (req, res, next) => {
   try {
     const urls = req.files.map((file) => getUrl(req, file));
