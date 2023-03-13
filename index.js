@@ -18,6 +18,11 @@ app.use(express.json());
 app.use('/public', express.static(`${__dirname}/storage/imgs`));
 app.use('/public', express.static(`${__dirname}/storage/avatar`));
 app.use('/public', express.static(`${__dirname}/storage/files`));
+app.use('/public/avatar', express.static(`${__dirname}/storage/Svg-Avatar`));
+app.use('/public/icon', express.static(`${__dirname}/storage/Svg-Icons`));
+
+
+
 app.use(cors());
 
 require('./utils/auth/index');
