@@ -17,6 +17,10 @@ const CursoSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  color: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
   description: {
     allowNull: false,
     type: DataTypes.STRING,
