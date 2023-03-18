@@ -61,7 +61,7 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const avatar = getUrl(req);
+      const avatar = getUrl(req) || body.avatar;
       const user = await service.update(id, { ...body, avatar });
       res.json(user);
     } catch (error) {
