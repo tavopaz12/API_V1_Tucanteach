@@ -21,14 +21,12 @@ app.use('/public', express.static(`${__dirname}/storage/files`));
 app.use('/public/avatar', express.static(`${__dirname}/storage/Svg-Avatar`));
 app.use('/public/icon', express.static(`${__dirname}/storage/Svg-Icons`));
 
-
-
 app.use(cors());
 
 require('./utils/auth/index');
 
 app.get('/', (req, res) => {
-  res.redirect('https://tucanteach.ml/')
+  res.redirect('https://tucanteach.ml/');
 });
 
 app.get('/tavo', (req, res) => {

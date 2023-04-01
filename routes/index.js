@@ -12,6 +12,8 @@ const post = require('./post.router');
 const conversations = require('./conversation.router');
 const messages = require('./message.router');
 const upload = require('./upload.router');
+const sendMail = require('./sendMail.router');
+
 
 function routerApi(app) {
   const router = express.Router();
@@ -28,6 +30,8 @@ function routerApi(app) {
   router.use('/conversations', conversations);
   router.use('/messages', messages);
   router.use('/upload', upload);
+  router.use('/mail', sendMail);
+
 }
 
 module.exports = routerApi;
